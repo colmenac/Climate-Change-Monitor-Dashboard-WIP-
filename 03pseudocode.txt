@@ -1,0 +1,213 @@
+import necessary libraries
+
+class DataManager()
+    function __init__()
+        print('initiating Data Manager Class')
+        db_name = 'climate_change'
+    
+    function status_of_the_data_source(url)
+        response = request.get(url)
+        if reponse.status_code != 200
+            break
+        return True
+        
+    function request_data(url)
+        if (status_of_the_data_source)
+            response = request.get.(url)
+            url_content = response.content
+        return url_content
+
+    function security_check(key, content)
+        if key == 'co2'
+            if content['year'] != Integer
+                content['year'] = int(content['year'))
+            else
+                print('year column is integer')
+            if content['co2_value'] != Integer
+                content['co2_value'] = int(content['co2_value'])
+            else
+                print('co2 value column is integer')
+        else if key == 'global_temp'
+            if content['year'] != Integer
+                content['year'] = int(content['year'))
+            else
+                print('year column is integer')
+            if content['global_temp'] != Integer
+                content['global_temp'] = int(content['global_temp'])
+            else
+                print('global temp column is integer')
+        else if key == 'ocean_warming'
+            if content['year'] != Integer
+                content['year'] = int(content['year'))
+            else
+                print('year column is integer')
+            if content['ocean_warming'] != Integer
+                content['ocean_warming'] = int(content['ocean_warming'])
+            else
+                print('ocean warnming column is integer')
+
+    function serilisation_data(key, content)
+        postgres_format_data = {}
+        if key == 'co2'
+            postgres_format_data = {'year': content['year'], 'co2_value': content['co2_value']}
+        else if key == 'global_temp'
+            postgres_format_data = {'year': content['year'], 'global_temp': content['global_temp']}
+        else if key == 'ocean_warming'
+            postgres_format_data = {'year': content['year'], 'ocean_warming': content['ocean_warming']}
+        return postgres_format_data
+    
+    function open_db()
+        connection = connect to postgreSQl db_name at localhost
+        return connection
+        
+    function commit_db(conn)
+        conn.commit(db_name)
+        
+    function close_db(conn)
+        conn.close(True)
+        
+    function create_table(key, conn)
+        conn.new_table(table_name=key, empty=True)
+    
+    function store_db(key, content, conn)
+        table_object = conn.query_table(table_name=key)
+        table_object.execute(SQL Query for inserting 'content' data)
+        
+    function store_data(key, content)
+        conn = open_db()
+        conn.new_table(key, conn)
+        conn.store_db(key, content, conn)
+        commit_db(conn)
+        close_db(conn)
+
+    function query_db(key)
+        conn = open_db()
+        table_object = conn.query_table(table_name=key)
+        table_object.execute(SQL query for selecting the data from 'key' table)
+        close_db(conn)
+        
+
+Class Calibration()
+    function __init__()
+        print('initiating Calibration Class')
+        
+    function sanitise_data(data)
+        for key, content in data.items() 
+            error_value = 0
+
+            if content.first_column == NULL
+                for year in content.first_column
+                    if year == NULL
+                        row_null_year = year.row_id
+                        previous_year_value = (row_null_year - 1).value
+                        content.first_column.row_null_year.replace(NULL, previous_year_value)
+                
+            if content.second_column == NULL
+                content.second_column.replace(NULL, error_value)
+        return data
+                        
+                        
+    function transform_data(individual_data)
+        new_data = {}
+        new_data['date'] = individual_data.first_column.to_date(year, to_format='Month-Date-Year')
+        new_date['values'] = individual_data.second_column.to_int(co2_values, to_format='int')
+        return new_data
+        
+    function individualise_data(data)
+        data_list = {}
+        for key, individual_data in data.items()
+            current_data = transform_data(key, individual_data)
+            data_list[key] = current_data
+        return data_list
+
+Class Visualisation()
+    function __init__()
+        print('initiating Visualisation Class')
+        
+    function overview_data(data)
+        print(data['co2'].latest_value)
+        print(data['global_temp'].latest_value)
+        print(data['ocean_warming'].latest_value)
+        
+    function tabular_data()
+        print(data['co2'].current_value)
+        print(data['co2'].avg_increase_from_last_year)
+        print(data['co2'].difference_bw_20years_current)
+        print(data['co2'].avg_of_last_10_years)
+        
+        print(data['global_temp'].current_value)
+        print(data['global_temp'].avg_increase_from_last_year)
+        print(data['global_temp'].difference_bw_20years_current)
+        print(data['global_temp'].avg_of_last_10_years)
+        
+        print(data['ocean_warming'].current_value)
+        print(data['ocean_warming'].avg_increase_from_last_year)
+        print(data['ocean_warming'].difference_bw_20years_current)
+        print(data['ocean_warming'].avg_of_last_10_years)
+        
+        
+    function create_chart(data)
+        seaborn.line_chart(data['co2']['date'], data['co2']['value'])
+        seaborn.scatter_plot(data['co2']['date'], data['co2']['value'])
+        seaborn.heatmap(data['co2']['date'], data['co2']['value'])
+        
+        seaborn.line_chart(data['global_temp']['date'], data['co2']['value'])
+        seaborn.scatter_plot(data['global_temp']['date'], data['co2']['value'])
+        seaborn.heatmap(data['global_temp']['date'], data['co2']['value'])
+        
+        seaborn.line_chart(data['ocean_warming']['date'], data['co2']['value'])
+        seaborn.scatter_plot(data['ocean_warming']['date'], data['co2']['value'])
+        seaborn.heatmap(data['ocean_warming']['date'], data['co2']['value'])
+
+Class GUI()
+    function __init__()
+        print('initiating GUI Class')
+        
+    function generate_report(data)
+        PDFReader.to_subtext(overview_data(data))
+        PDFReader.to_subtext(tabular_data(data))
+        PDFReader.to_subtext(create_chart(data))
+        report = PDFReader.save()
+        return report
+        
+
+Class Network()
+    function __init__()
+        print('initiating Network Class')
+        
+    function send_report(email, pdf)
+        send_email(to=email, attachement=pdf)
+        download(content=pdf, headers='Climate Change Website')
+
+
+
+data_object = DataManager()
+
+data_url = {co2: co2_url, global_temp: global_temp_url, ocean_warming: ocean_warming_url}
+data_content = {}
+
+for url in data_url.values()
+    data_content[key] = data_object.request_data(url)
+
+data_for_processing = {}    
+for key, content in data_content.items()
+    data_object.security_check(key, content)
+    serialised_data = data_object.serialisation_data(key, content)
+    data_object.store_data(key, serialised_data)
+    data_for_processing[key] = data_object.query_db(key)
+
+calibration_object = Calibration()
+sanitised_data = calibration_object.sanitise_data(data_for_processing)
+data_for_visualisation = calibration_object.individualise_data(sanitised_data)
+
+visualisation_object = Visualisation()
+visualisation_object.overview_data(data_for_visualisation)
+visualisation_object.tabular_data(data_for_visualisation)
+visualisation_object.create_chart(data_for_visualisation)
+
+report_object = GUI()
+report_pdf = report_object.generate_report(data_for_visualisation)
+
+email = 'random_email@gmail.com'
+network_object = Network()
+network_object.send_report(email, report_pdf)

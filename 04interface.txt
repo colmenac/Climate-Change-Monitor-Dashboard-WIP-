@@ -1,0 +1,134 @@
+interface DataManagerInterface() {
+    # defines an abstract data manager interface for nasa climate change data
+    # requires: pandas, numpy, postgresSQL
+    # provides: __init__, status_of_the_data_source, request_data,
+    # security_check, serialisation_data, open_db, commit_db, close_db,
+    # create_table, store_db, store_data, query_db
+    
+    def __init__():
+        print('setting db name')
+        db_name = 'climate_change'
+    
+    def status_of_the_data_source(self, url: str) -> bool:
+        """Overrides in Class Manager"""
+        pass
+    
+    def request_data(self, url: str) -> str:
+        """Overrides in Class Manager"""
+        pass
+    
+    def security_check(self, key: str, content: str) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def serialisation_data(self, key: str, content) -> dict:
+        """Overrides in Class Manager"""
+        pass
+    
+    def open_db(self, conn: postgresObject) -> postgresObject:
+        """Overrides in Class Manager"""
+        pass
+    
+    def commit_db(self, conn: postgresObject) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def close_db(self, conn: postgresObject) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def create_table(self, key: str, conn: postgresObject) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def store_db(self, key: str, content: str, conn: postgresObject) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def store_data(self, key: str, content: str) -> None:
+        """Overrides in Class Manager"""
+        pass
+    
+    def query_db(self, key: str) -> dict:
+        """Overrides in Class Manager"""
+        pass
+}
+
+interface CalibrationInterface() {
+    # defines an abstract calibration manager interface for the data
+    # requires: pandas, numpy
+    # provides: __init__, sanitise_data, transform_data,
+    # individualise_data
+    
+    def __init__():
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+    def sanitise_data(self, data: dict) -> dict:
+        """Overrides in Calibration Class Manager"""
+        pass
+
+    def transform_data(self, individual_data: dict) -> dict:
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+    def individualise_data(self, data: dict) -> dict:
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+}
+
+interface VisualisationInterface() {
+    # defines an abstract visualisation manager interface for the data
+    # requires: pandas, numpy
+    # provides: __init__, overview_data, tabular_data,
+    # create_chart
+    
+    def __init__():
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+    def overview_data(self, data: dict) -> None:
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+    def tabular_data(self, data: dict) -> None:
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+    def create_chart(self, data: dict) -> None:
+        """Overrides in Calibration Class Manager"""
+        pass
+    
+}
+
+interface GUIInterface() {
+    # defines an abstract visualisation manager iterface for the data
+    # requires: pandas, numpy
+    # provides: __init__, generate_report
+    
+    def __init__():
+        """Overrides in GUI Class Manager"""
+        pass
+    
+    def generate_report()(self, data: dict) -> PDFManagerObject:
+        """Overrides in GUI Class Manager"""
+        pass
+    
+}
+
+interface NetworkInterface() {
+    # defines an abstract network manager interface for the data
+    # requires: pandas, numpy
+    # provides: __init__, send_report
+    
+    def __init__():
+        """Overrides in Network Class Manager"""
+        pass
+    
+    def send_report()(self, email: str, pdf: PDFManagerObject) -> bool:
+        """Overrides in Network Class Manager"""
+        pass
+}
+
+
